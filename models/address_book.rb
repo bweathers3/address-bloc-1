@@ -4,6 +4,7 @@ require 'bloc_record/base'
 
 
 class AddressBook < BlocRecord::Base
+
   attr_reader :entries
 
   def add_entry(name, phone_number, email)
@@ -11,7 +12,6 @@ class AddressBook < BlocRecord::Base
   end
 
   def import_from_csv(file_name)
-    # Implementation goes here
     csv_text = File.read(file_name)
     csv = CSV.parse(csv_text, headers: true, skip_blanks: true)
     csv.each do |row|
