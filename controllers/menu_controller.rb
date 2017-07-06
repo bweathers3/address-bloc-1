@@ -75,6 +75,17 @@ class MenuController
     puts "End of entries"
   end
 
+  def view_all_ordered_entries
+    @address_book = order(@sort_order)
+    @address_book.entries.each do |entry|
+      system "clear"
+      puts entry.to_s
+      entry_submenu(entry)
+    end
+    system "clear"
+    puts "End of entries"
+  end
+
   def create_entry
     system "clear"
     puts "New AddressBloc Entry"
@@ -150,6 +161,67 @@ class MenuController
         entry_submenu(entry)
     end
   end
+
+#############
+
+def order_entry(entry)
+  @sort_order = []
+
+  puts "Enter Item to use in the Order By SQL"
+  puts "1 - Name ASC"
+  puts "2 - Name DESC"
+  puts "3 - Phone Number ASC"
+  puts "4 - Phone Number DESC"
+  puts "5 - Email ASC"
+  puts "6 - Email DESC"
+  puts "7 - Un-ordered"
+  puts "m - Return to main menu"
+
+  selection = gets.chomp
+
+  case selection
+    when 1
+      @sort_order = "name ASC"
+    when 2
+      @sort_order = "name DESC"
+    when 3
+      @sort_order = "phone_number ASC"
+    when 4
+      @sort_order = "phone_number DESC"
+    when 5
+      @sort_order = "email ASC"
+    when 6
+      @sort_order = "email DESC"
+    when 7
+      @sort_order = "random"
+    when "m"
+      system "clear"
+      main_menu
+    else
+      system "clear"
+      puts "#{selection} is not a valid input"
+      order_entry(entry)
+  end
+
+  puts "Would you like to add an additional sort critiria?"
+  puts "Y - Yes"
+  puts "N - No"
+
+  selection = gets.chomp
+
+  case selection
+    when Y
+      order_entry(entry)
+    when N
+
+    else
+      system "clear"
+      puts "#{selection} is not a valid input"
+      order_entry(entry)
+  end
+end
+
+#############
 
   def delete_entry(entry)
     address_book.entries.delete(entry)
