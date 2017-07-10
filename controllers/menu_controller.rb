@@ -183,7 +183,7 @@ class MenuController
     case selection
       when "d"
         system "clear"
-        delete_entry(entry)
+        Entry.destroy(entry.id)
         main_menu
       when "e"
         edit_entry(entry)
